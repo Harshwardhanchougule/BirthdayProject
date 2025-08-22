@@ -231,6 +231,7 @@ export default function Index() {
                     <p className="text-lg text-white/90 leading-relaxed">
                       You deserve all the happiness in the world, and we hope your special day is as wonderful as you are! 🌟
                     </p>
+                    <h1 className="text-xl text-white/500 leading-relaxed">Once Agin Happy Birthday Shravani❤️</h1>
                   </motion.div>
 
                   <div className="flex gap-4 justify-center">
