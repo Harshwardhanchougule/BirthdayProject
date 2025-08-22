@@ -1,0 +1,548 @@
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { ChevronRight, ChevronLeft, Heart, Star, Sparkles, Gift, Cake, PartyPopper } from "lucide-react";
+
+export default function Index() {
+  const [currentStep, setCurrentStep] = useState(1);
+
+  const nextStep = () => {
+    if (currentStep < 4) {
+      setCurrentStep(currentStep + 1);
+    }
+  };
+
+  const prevStep = () => {
+    if (currentStep > 1) {
+      setCurrentStep(currentStep - 1);
+    }
+  };
+
+  const resetFlow = () => {
+    setCurrentStep(1);
+  };
+
+  // Floating background elements
+  const floatingElements = Array.from({ length: 15 }, (_, i) => (
+    <motion.div
+      key={i}
+      className="absolute text-2xl opacity-60"
+      initial={{ y: "100vh", x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1000) }}
+      animate={{
+        y: "-100px",
+        x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1000),
+        rotate: 360
+      }}
+      transition={{
+        duration: Math.random() * 8 + 12,
+        repeat: Infinity,
+        ease: "linear",
+        delay: Math.random() * 5
+      }}
+    >
+      {["🎂", "🎉", "🎊", "🎈", "🎁", "✨", "🌟", "💖", "🎵", "🌸"][i % 10]}
+    </motion.div>
+  ));
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-pink-400 via-purple-400 to-indigo-500 relative overflow-hidden">
+      {/* Floating Background Elements */}
+      <div className="fixed inset-0 pointer-events-none">
+        {floatingElements}
+      </div>
+
+      {/* Main Content */}
+      <div className="relative z-10 container mx-auto px-4 py-8 min-h-screen flex items-center justify-center">
+        <div className="w-full max-w-2xl">
+
+          {/* Step Indicator */}
+          <motion.div
+            className="flex justify-center mb-8"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="flex gap-3">
+              {[1, 2, 3, 4].map((step) => (
+                <motion.div
+                  key={step}
+                  className={`w-4 h-4 rounded-full transition-all duration-300 ${step === currentStep
+                      ? 'bg-white shadow-lg scale-125'
+                      : step < currentStep
+                        ? 'bg-white/70'
+                        : 'bg-white/30'
+                    }`}
+                  whileHover={{ scale: 1.2 }}
+                />
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Step Content */}
+          <AnimatePresence mode="wait">
+            {currentStep === 1 && (
+              <motion.div
+                key="step1"
+                initial={{ opacity: 0, x: 100, scale: 0.9 }}
+                animate={{ opacity: 1, x: 0, scale: 1 }}
+                exit={{ opacity: 0, x: -100, scale: 0.9 }}
+                transition={{ duration: 0.5, type: "spring" }}
+              >
+                <Card className="p-8 md:p-12 bg-white/20 backdrop-blur-xl border-white/30 text-center relative overflow-hidden">
+                  {/* Sparkle Effects */}
+                  {Array.from({ length: 8 }, (_, i) => (
+                    <motion.div
+                      key={i}
+                      className="absolute text-yellow-300 text-xl"
+                      style={{
+                        top: `${Math.random() * 100}%`,
+                        left: `${Math.random() * 100}%`,
+                      }}
+                      animate={{
+                        scale: [0, 1, 0],
+                        rotate: [0, 180, 360],
+                        opacity: [0, 1, 0]
+                      }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        delay: Math.random() * 3
+                      }}
+                    >
+                      <Sparkles className="w-5 h-5" />
+                    </motion.div>
+                  ))}
+
+                  <motion.div
+                    animate={{
+                      scale: [1, 1.05, 1],
+                    }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  >
+                    <Cake className="w-20 h-16 text-white mx-auto mb-6" />
+                  </motion.div>
+
+                  <motion.h1
+                    className="text-5xl md:text-6xl font-bold text-white mb-6"
+                    animate={{
+                      textShadow: [
+                        "0 0 20px rgba(255,255,255,0.5)",
+                        "0 0 40px rgba(255,255,255,0.8)",
+                        "0 0 20px rgba(255,255,255,0.5)"
+                      ]
+                    }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  >
+                    Happy Birthday Shravani...! 🎉
+                  </motion.h1>
+
+                  <motion.p
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 }}
+                    className="text-xl text-white/90 mb-8"
+                  >
+                    Let's celebrate your special day!
+                  </motion.p>
+
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <Button
+                      onClick={nextStep}
+                      size="lg"
+                      className="bg-white/20 hover:bg-white/30 text-white border-2 border-white/40 hover:border-white/60 text-lg px-8 py-3"
+                    >
+                      Next <ChevronRight className="w-5 h-5 ml-2" />
+                    </Button>
+                  </motion.div>
+                </Card>
+              </motion.div>
+            )}
+
+            {currentStep === 2 && (
+              <motion.div
+                key="step2"
+                initial={{ opacity: 0, x: 100, scale: 0.9 }}
+                animate={{ opacity: 1, x: 0, scale: 1 }}
+                exit={{ opacity: 0, x: -100, scale: 0.9 }}
+                transition={{ duration: 0.5, type: "spring" }}
+              >
+                <Card className="p-8 md:p-12 bg-white/20 backdrop-blur-xl border-white/30 text-center relative overflow-hidden">
+                  {/* Floating Hearts */}
+                  {Array.from({ length: 6 }, (_, i) => (
+                    <motion.div
+                      key={i}
+                      className="absolute text-pink-300 text-2xl"
+                      style={{
+                        top: `${Math.random() * 100}%`,
+                        left: `${Math.random() * 100}%`,
+                      }}
+                      animate={{
+                        y: [-20, -40, -20],
+                        opacity: [0.6, 1, 0.6]
+                      }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        delay: Math.random() * 2
+                      }}
+                    >
+                      <Heart className="w-6 h-6" />
+                    </motion.div>
+                  ))}
+
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ type: "spring", duration: 0.8 }}
+                  >
+                    <Gift className="w-16 h-16 text-white mx-auto mb-6" />
+                  </motion.div>
+
+                  <motion.h2
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                    className="text-4xl md:text-5xl font-bold text-white mb-6"
+                  >
+                    A Special Message
+                  </motion.h2>
+
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4 }}
+                    className="space-y-4 mb-8"
+                  >
+                    <p className="text-lg text-white/90 leading-relaxed">
+                      Today is all about celebrating you and the amazing person you are.
+                      May this new year of your life be filled with joy, laughter, and countless beautiful moments.
+                    </p>
+                    <p className="text-lg text-white/90 leading-relaxed">
+                      You deserve all the happiness in the world, and we hope your special day is as wonderful as you are! 🌟
+                    </p>
+                  </motion.div>
+
+                  <div className="flex gap-4 justify-center">
+                    <motion.div
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <Button
+                        onClick={prevStep}
+                        variant="outline"
+                        className="bg-white/10 border-white/30 text-white hover:bg-white/20"
+                      >
+                        <ChevronLeft className="w-4 h-4 mr-2" /> Back
+                      </Button>
+                    </motion.div>
+                    <motion.div
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <Button
+                        onClick={nextStep}
+                        size="lg"
+                        className="bg-white/20 hover:bg-white/30 text-white border-2 border-white/40 hover:border-white/60 text-lg px-8"
+                      >
+                        Next <ChevronRight className="w-5 h-5 ml-2" />
+                      </Button>
+                    </motion.div>
+                  </div>
+                </Card>
+              </motion.div>
+            )}
+
+            {currentStep === 3 && (
+              <motion.div
+                key="step3"
+                initial={{ opacity: 0, x: 100, scale: 0.9 }}
+                animate={{ opacity: 1, x: 0, scale: 1 }}
+                exit={{ opacity: 0, x: -100, scale: 0.9 }}
+                transition={{ duration: 0.5, type: "spring" }}
+              >
+                <Card className="p-8 md:p-12 bg-white/20 backdrop-blur-xl border-white/30 text-center relative overflow-hidden">
+                  <motion.h2
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-4xl md:text-5xl font-bold text-white mb-8"
+                  >
+                    Celebration Gallery 📸
+                  </motion.h2>
+
+                  {/* Multiple Images Grid with Animations */}
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
+                    {[
+                      { emoji: "🎂", delay: 0, title: "Birthday Cake" },
+                      { emoji: "🎈", delay: 0.2, title: "Balloons" },
+                      { emoji: "🎁", delay: 0.4, title: "Gifts" },
+                      { emoji: "🎉", delay: 0.6, title: "Party" },
+                      { emoji: "🌟", delay: 0.8, title: "Wishes" },
+                      { emoji: "💖", delay: 1.0, title: "Love" }
+                    ].map((item, index) => (
+                      <motion.div
+                        key={index}
+                        initial={{ opacity: 0, scale: 0 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{
+                          delay: item.delay,
+                          type: "spring",
+                          duration: 0.6
+                        }}
+                        whileHover={{
+                          scale: 1.1,
+                          rotate: [0, -5, 5, 0],
+                          transition: { duration: 0.3 }
+                        }}
+                        className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20 cursor-pointer group"
+                      >
+                        <motion.div
+                          animate={{
+                            rotate: [0, 10, -10, 0],
+                            scale: [1, 1.1, 1]
+                          }}
+                          transition={{
+                            duration: 2,
+                            repeat: Infinity,
+                            delay: item.delay + index * 0.3
+                          }}
+                          className="text-4xl mb-2"
+                        >
+                          {item.emoji}
+                        </motion.div>
+                        <p className="text-white/80 text-sm group-hover:text-white transition-colors">
+                          {item.title}
+                        </p>
+                      </motion.div>
+                    ))}
+                  </div>
+
+                  {/* Animated Stars */}
+                  {Array.from({ length: 10 }, (_, i) => (
+                    <motion.div
+                      key={i}
+                      className="absolute text-yellow-300"
+                      style={{
+                        top: `${Math.random() * 100}%`,
+                        left: `${Math.random() * 100}%`,
+                      }}
+                      animate={{
+                        scale: [0, 1, 0],
+                        rotate: [0, 180, 360],
+                        opacity: [0, 1, 0]
+                      }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        delay: Math.random() * 3
+                      }}
+                    >
+                      <Star className="w-4 h-4" />
+                    </motion.div>
+                  ))}
+
+                  <motion.p
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1.2 }}
+                    className="text-lg text-white/90 mb-8"
+                  >
+                    May your day be filled with all these wonderful moments and more! 🎊
+                  </motion.p>
+
+                  <div className="flex gap-4 justify-center">
+                    <motion.div
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <Button
+                        onClick={prevStep}
+                        variant="outline"
+                        className="bg-white/10 border-white/30 text-white hover:bg-white/20"
+                      >
+                        <ChevronLeft className="w-4 h-4 mr-2" /> Back
+                      </Button>
+                    </motion.div>
+                    <motion.div
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <Button
+                        onClick={nextStep}
+                        size="lg"
+                        className="bg-white/20 hover:bg-white/30 text-white border-2 border-white/40 hover:border-white/60 text-lg px-8"
+                      >
+                        Next <ChevronRight className="w-5 h-5 ml-2" />
+                      </Button>
+                    </motion.div>
+                  </div>
+                </Card>
+              </motion.div>
+            )}
+
+            {currentStep === 4 && (
+              <motion.div
+                key="step4"
+                initial={{ opacity: 0, x: 100, scale: 0.9 }}
+                animate={{ opacity: 1, x: 0, scale: 1 }}
+                exit={{ opacity: 0, x: -100, scale: 0.9 }}
+                transition={{ duration: 0.5, type: "spring" }}
+              >
+                <Card className="p-8 md:p-12 bg-white/20 backdrop-blur-xl border-white/30 text-center relative overflow-hidden">
+                  <motion.h2
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-4xl md:text-5xl font-bold text-white mb-8"
+                  >
+                    Memory Lane 🌈
+                  </motion.h2>
+
+                  <motion.p
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                    className="text-lg text-white/90 mb-8"
+                  >
+                    Watch as beautiful memories flow across your special day!
+                  </motion.p>
+
+                  {/* 10 Images Container with Left to Right Animation */}
+                  <div className="relative h-32 mb-8 overflow-hidden rounded-lg bg-white/5">
+                    {[
+                      { emoji: "🎂", name: "Birthday Cake", color: "text-orange-300" },
+                      { emoji: "🎈", name: "Balloons", color: "text-red-300" },
+                      { emoji: "🎁", name: "Gifts", color: "text-blue-300" },
+                      { emoji: "🎉", name: "Confetti", color: "text-yellow-300" },
+                      { emoji: "🌟", name: "Stars", color: "text-purple-300" },
+                      { emoji: "💖", name: "Love", color: "text-pink-300" },
+                      { emoji: "🍰", name: "Slice of Cake", color: "text-amber-300" },
+                      { emoji: "🎵", name: "Music", color: "text-green-300" },
+                      { emoji: "🌸", name: "Flowers", color: "text-rose-300" },
+                      { emoji: "✨", name: "Magic", color: "text-cyan-300" }
+                    ].map((item, index) => (
+                      <motion.div
+                        key={index}
+                        className={`absolute flex flex-col items-center justify-center w-20 h-20 ${item.color}`}
+                        initial={{ x: -100, opacity: 0, scale: 0 }}
+                        animate={{
+                          x: [
+                            -100,
+                            50 + (index * 80),
+                            50 + (index * 80),
+                            window.innerWidth || 1000
+                          ],
+                          opacity: [0, 1, 1, 0],
+                          scale: [0, 1, 1, 0],
+                          rotate: [0, 360 * (index + 1), 720 * (index + 1), 1080 * (index + 1)]
+                        }}
+                        transition={{
+                          duration: 4 + (index * 0.3),
+                          delay: index * 0.4,
+                          repeat: Infinity,
+                          repeatDelay: 2,
+                          ease: "easeInOut"
+                        }}
+                        whileHover={{
+                          scale: 1.2,
+                          y: -10,
+                          transition: { duration: 0.2 }
+                        }}
+                      >
+                        <motion.div
+                          className="text-3xl mb-1"
+                          animate={{
+                            scale: [1, 1.2, 1],
+                            y: [0, -5, 0]
+                          }}
+                          transition={{
+                            duration: 1.5,
+                            repeat: Infinity,
+                            delay: index * 0.2
+                          }}
+                        >
+                          {item.emoji}
+                        </motion.div>
+                        <span className="text-xs text-white/80 font-medium">
+                          {item.name}
+                        </span>
+                      </motion.div>
+                    ))}
+                  </div>
+
+                  {/* Animated Background Elements */}
+                  {Array.from({ length: 15 }, (_, i) => (
+                    <motion.div
+                      key={i}
+                      className="absolute text-white/20"
+                      style={{
+                        top: `${Math.random() * 100}%`,
+                        left: `${Math.random() * 100}%`,
+                      }}
+                      animate={{
+                        x: [0, 50, -50, 0],
+                        y: [0, -30, 30, 0],
+                        scale: [0.8, 1.2, 0.8],
+                        opacity: [0.2, 0.6, 0.2]
+                      }}
+                      transition={{
+                        duration: 4 + Math.random() * 2,
+                        repeat: Infinity,
+                        delay: Math.random() * 3
+                      }}
+                    >
+                      {["🎊", "💫", "🌈", "⭐", "🎯"][i % 5]}
+                    </motion.div>
+                  ))}
+
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1.5 }}
+                    className="space-y-4 mb-8"
+                  >
+                    <p className="text-lg text-white/90">
+                      Each moment is a treasure, each memory a gift! 🎁
+                    </p>
+                    <p className="text-base text-white/80">
+                      May your birthday be filled with endless joy and beautiful surprises!
+                    </p>
+                  </motion.div>
+
+                  <div className="flex gap-4 justify-center">
+                    <motion.div
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <Button
+                        onClick={prevStep}
+                        variant="outline"
+                        className="bg-white/10 border-white/30 text-white hover:bg-white/20"
+                      >
+                        <ChevronLeft className="w-4 h-4 mr-2" /> Back
+                      </Button>
+                    </motion.div>
+                    <motion.div
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <Button
+                        onClick={resetFlow}
+                        size="lg"
+                        className="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white border-none"
+                      >
+                        <PartyPopper className="w-5 h-5 mr-2" /> Start Again
+                      </Button>
+                    </motion.div>
+                  </div>
+                </Card>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </div>
+    </div>
+  );
+}
