@@ -3,6 +3,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ChevronRight, ChevronLeft, Heart, Star, Sparkles, Gift, Cake, PartyPopper } from "lucide-react";
+import img1 from "@/img/1.jpeg";
+import img2 from "@/img/2.jpeg";
+import img3 from "@/img/3.jpeg";
+import img4 from "@/img/4.jpeg";
+import img5 from "@/img/5.jpeg";
+import img6 from "@/img/6.jpeg";
+
 
 export default function Index() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -68,10 +75,10 @@ export default function Index() {
                 <motion.div
                   key={step}
                   className={`w-4 h-4 rounded-full transition-all duration-300 ${step === currentStep
-                      ? 'bg-white shadow-lg scale-125'
-                      : step < currentStep
-                        ? 'bg-white/70'
-                        : 'bg-white/30'
+                    ? 'bg-white shadow-lg scale-125'
+                    : step < currentStep
+                      ? 'bg-white/70'
+                      : 'bg-white/30'
                     }`}
                   whileHover={{ scale: 1.2 }}
                 />
@@ -273,15 +280,15 @@ export default function Index() {
                     Celebration Gallery 📸
                   </motion.h2>
 
-                  {/* Multiple Images Grid with Animations */}
+                  {/* Photo Gallery Grid with Imported Images */}
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
                     {[
-                      { emoji: "🎂", delay: 0, title: "Birthday Cake" },
-                      { emoji: "🎈", delay: 0.2, title: "Balloons" },
-                      { emoji: "🎁", delay: 0.4, title: "Gifts" },
-                      { emoji: "🎉", delay: 0.6, title: "Party" },
-                      { emoji: "🌟", delay: 0.8, title: "Wishes" },
-                      { emoji: "💖", delay: 1.0, title: "Love" }
+                      { img: img1, delay: 0.1, title: "Beautiful Moments" },
+                      { img: img2, delay: 0.2, title: "Special Memories" },
+                      { img: img3, delay: 0.3, title: "Happy Times" },
+                      { img: img4, delay: 0.4, title: "Celebration Joy" },
+                      { img: img5, delay: 0.5, title: "Precious Smiles" },
+                      { img: img6, delay: 0.6, title: "Wonderful Memories" }
                     ].map((item, index) => (
                       <motion.div
                         key={index}
@@ -297,23 +304,26 @@ export default function Index() {
                           rotate: [0, -5, 5, 0],
                           transition: { duration: 0.3 }
                         }}
-                        className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20 cursor-pointer group"
+                        className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20 cursor-pointer group overflow-hidden"
                       >
                         <motion.div
                           animate={{
-                            rotate: [0, 10, -10, 0],
-                            scale: [1, 1.1, 1]
+                            scale: [1, 1.05, 1]
                           }}
                           transition={{
                             duration: 2,
                             repeat: Infinity,
                             delay: item.delay + index * 0.3
                           }}
-                          className="text-4xl mb-2"
+                          className="w-full h-32 mb-3 rounded-md overflow-hidden"
                         >
-                          {item.emoji}
+                          <img
+                            src={item.img}
+                            alt={item.title}
+                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                          />
                         </motion.div>
-                        <p className="text-white/80 text-sm group-hover:text-white transition-colors">
+                        <p className="text-white/80 text-sm group-hover:text-white transition-colors text-center">
                           {item.title}
                         </p>
                       </motion.div>
@@ -409,63 +419,45 @@ export default function Index() {
                     Watch as beautiful memories flow across your special day!
                   </motion.p>
 
-                  {/* 10 Images Container with Left to Right Animation */}
-                  <div className="relative h-32 mb-8 overflow-hidden rounded-lg bg-white/5">
+                  {/* All Images Displayed in Grid */}
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-8">
                     {[
-                      { emoji: "🎂", name: "Birthday Cake", color: "text-orange-300" },
-                      { emoji: "🎈", name: "Balloons", color: "text-red-300" },
-                      { emoji: "🎁", name: "Gifts", color: "text-blue-300" },
-                      { emoji: "🎉", name: "Confetti", color: "text-yellow-300" },
-                      { emoji: "🌟", name: "Stars", color: "text-purple-300" },
-                      { emoji: "💖", name: "Love", color: "text-pink-300" },
-                      { emoji: "🍰", name: "Slice of Cake", color: "text-amber-300" },
-                      { emoji: "🎵", name: "Music", color: "text-green-300" },
-                      { emoji: "🌸", name: "Flowers", color: "text-rose-300" },
-                      { emoji: "✨", name: "Magic", color: "text-cyan-300" }
+                      { img: img1, name: "Beautiful Moments" },
+                      { img: img2, name: "Special Memories" },
+                      { img: img3, name: "Happy Times" },
+                      { img: img4, name: "Celebration Joy" },
+                      { img: img5, name: "Precious Smiles" },
+                      { img: img6, name: "Wonderful Memories" }
                     ].map((item, index) => (
                       <motion.div
                         key={index}
-                        className={`absolute flex flex-col items-center justify-center w-20 h-20 ${item.color}`}
-                        initial={{ x: -100, opacity: 0, scale: 0 }}
-                        animate={{
-                          x: [
-                            -100,
-                            50 + (index * 80),
-                            50 + (index * 80),
-                            window.innerWidth || 1000
-                          ],
-                          opacity: [0, 1, 1, 0],
-                          scale: [0, 1, 1, 0],
-                          rotate: [0, 360 * (index + 1), 720 * (index + 1), 1080 * (index + 1)]
-                        }}
+                        className="flex flex-col items-center justify-center w-full bg-white/20 backdrop-blur-sm rounded-xl border border-white/30 p-6"
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
                         transition={{
-                          duration: 4 + (index * 0.3),
-                          delay: index * 0.4,
-                          repeat: Infinity,
-                          repeatDelay: 2,
-                          ease: "easeInOut"
+                          duration: 0.6,
+                          delay: index * 0.1,
+                          type: "spring"
                         }}
                         whileHover={{
-                          scale: 1.2,
-                          y: -10,
+                          scale: 1.05,
                           transition: { duration: 0.2 }
                         }}
                       >
-                        <motion.div
-                          className="text-3xl mb-1"
-                          animate={{
-                            scale: [1, 1.2, 1],
-                            y: [0, -5, 0]
-                          }}
-                          transition={{
-                            duration: 1.5,
-                            repeat: Infinity,
-                            delay: index * 0.2
-                          }}
-                        >
-                          {item.emoji}
-                        </motion.div>
-                        <span className="text-xs text-white/80 font-medium">
+                        <div className="w-48 h-48 rounded-lg overflow-hidden mb-4 shadow-lg bg-gray-200 force-cover">
+                          <img
+                            src={item.img}
+                            alt={item.name}
+                            className="w-full h-full object-cover object-center"
+                            style={{
+                              minWidth: '100%',
+                              minHeight: '100%',
+                              maxWidth: '100%',
+                              maxHeight: '100%'
+                            }}
+                          />
+                        </div>
+                        <span className="text-lg text-white font-medium text-center">
                           {item.name}
                         </span>
                       </motion.div>
