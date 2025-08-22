@@ -224,7 +224,6 @@ export default function Index() {
                     transition={{ delay: 0.4 }}
                     className="space-y-4 mb-8"
 
-                    
                   >
                     <p className="text-lg text-white/90 leading-relaxed">
                       Today is all about celebrating you and the amazing person you are.
